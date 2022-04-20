@@ -108,7 +108,7 @@ func loadPackage(path string, buildFirst bool) (*packages.Package, error) {
 	}
 
 	// golang.org/x/tools/go/packages supports modules or GOPATH etc
-	bpkgs, err := packages.Load(&packages.Config{Mode: packages.LoadTypes}, path)
+	bpkgs, err := packages.Load(&packages.Config{Mode: packages.LoadAllSyntax}, path)
 	if err != nil {
 		log.Printf("error resolving import path [%s]: %v\n",
 			path,
