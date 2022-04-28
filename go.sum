@@ -1,3 +1,5 @@
+github.com/go-python/gopy v0.4.0 h1:S4BacXPDpSmYDHpU2wDOHEqNzKPqXvOujDaNDZCM0lQ=
+github.com/go-python/gopy v0.4.0/go.mod h1:Cy1xAhFd2/tmxi3ysq9E5FobTBPjX5f+OVjViV53QMw=
 github.com/gonuts/commander v0.1.0 h1:EcDTiVw9oAVORFjQOEOuHQqcl6OXMyTgELocTq6zJ0I=
 github.com/gonuts/commander v0.1.0/go.mod h1:qkb5mSlcWodYgo7vs8ulLnXhfinhZsZcm6+H/z1JjgY=
 github.com/gonuts/flag v0.1.0 h1:fqMv/MZ+oNGu0i9gp0/IQ/ZaPIDoAZBOBaJoV7viCWM=
