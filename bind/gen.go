@@ -89,7 +89,7 @@ static inline void gopy_err_handle() {
 */
 import "C"
 import (
-	"github.com/go-python/gopy/gopyh" // handler
+	"github.com/alexjx/gopy/gopyh" // handler
 	%[6]s
 )
 
@@ -268,11 +268,7 @@ try:
 except ImportError:
 	_collections_abc = collections
 
-cwd = os.getcwd()
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-os.chdir(currentdir)
 %[6]s
-os.chdir(cwd)
 
 # to use this code in your end-user python file, import it as follows:
 # from %[1]s import %[3]s
@@ -313,13 +309,13 @@ try:
 	import collections.abc as _collections_abc
 except ImportError:
 	_collections_abc = collections
-	
+
 class GoClass(object):
 	"""GoClass is the base class for all GoPy wrapper classes"""
 	def __init__(self):
 		self.handle = 0
 
-# use go.nil for nil pointers 
+# use go.nil for nil pointers
 nil = GoClass()
 
 # need to explicitly initialize it
@@ -372,7 +368,7 @@ build:
 	# generated %[1]s.py python wrapper imports this c-code package
 	%[9]s
 	$(GCC) %[1]s.c %[6]s %[1]s_go$(LIBEXT) -o _%[1]s$(LIBEXT) $(CFLAGS) $(LDFLAGS) -fPIC --shared -w
-	
+
 `
 
 	// exe version of template: 3 = gencmd, 4 = vm, 5 = libext
@@ -401,7 +397,7 @@ build:
 	# goimports is needed to ensure that the imports list is valid
 	$(GOIMPORTS) -w %[1]s.go
 	# this will otherwise be built during go build and may be out of date
-	- rm %[1]s.c 
+	- rm %[1]s.c
 	echo "typedef uint8_t bool;" > %[1]s_go.h
 	# this will fail but is needed to generate the .c file that then allows go build to work
 	- $(PYTHON) build.py >/dev/null 2>&1
@@ -413,7 +409,7 @@ build:
 	# build the executable
 	- rm %[1]s_go$(LIBEXT)
 	$(GOBUILD) -o py%[1]s
-	
+
 `
 )
 
@@ -541,11 +537,7 @@ func (g *pyGen) genPkgWrapOut() {
 	// note: must generate import string at end as imports can be added during processing
 	impstr := ""
 	for _, im := range g.pkg.pyimports {
-		if g.mode == ModeGen || g.mode == ModeBuild {
-			impstr += fmt.Sprintf("import %s\n", im)
-		} else {
-			impstr += fmt.Sprintf("from %s import %s\n", g.cfg.Name, im)
-		}
+		impstr += fmt.Sprintf("from %s import %s\n", g.cfg.Name, im)
 	}
 	b := g.pywrap.buf.Bytes()
 	nb := bytes.Replace(b, []byte(importHereKeyString), []byte(impstr), 1)
